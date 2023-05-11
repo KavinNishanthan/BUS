@@ -8,7 +8,7 @@ import Booking from './Bookingpage';
 const Navbar = () => {
   return (
     <div className='p-5'>
-      <div className=' bg-blue-300 rounded-2xl p-9 mb-10'> 
+      <section className=' bg-blue-300 rounded-2xl p-9 mb-10'> 
         <div className='container w-full'>
           <div className='flex py-0'>
                 <ul className='flex font-bold'>
@@ -32,10 +32,10 @@ const Navbar = () => {
           </div> 
             {<Home/>}
         </div>
-      </div>
-      <div className=' bg-purple-100 rounded-2xl p-5 mb-10 w-full'>
+      </section>
+      <section className=' bg-slate-200 rounded-2xl p-6 w-full h-[43rem]'>
          <Booking/>
-      </div>
+      </section>
     </div>
   )
 }
