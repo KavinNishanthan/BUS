@@ -3,6 +3,13 @@ import { GiSteeringWheel } from "react-icons/gi";
 import { TbArmchair } from "react-icons/tb";
 import { useState } from "react";
 
+
+// function useSeatCountLogger(seatCounts, busId) {
+//   useEffect(() => {
+//     var sct = seatCounts[busId];
+//   }, [seatCounts, busId]);
+// }
+
 const Booking = () => {
   const data = [
     {
@@ -205,41 +212,52 @@ const Booking = () => {
 
   const [selectSeat, setSeat] = useState(false);
   const [busId, setBusId] = useState(null);
+  const [clickSeat, setColor] = useState(data);
+  const [seatCounts, setSeatCounts] = useState({});
 
   const showChange = (busId) => {
     setBusId(busId);
     setSeat(!selectSeat);
   };
 
-  const [clickSeat, setColor] = useState(data);
+ // useSeatCountLogger(seatCounts, busId);
 
   const colchg = (key, bsid) => {
-    console.log("key:", key, "bsid :", bsid);
     const updatedClickSeat = clickSeat.map((value) => {
       if (value.id === bsid) {
         const updatedSeats = value.seat.map((seat) => {
           if (seat.id === key) {
-            console.log(key);
             if (seat.col === "black") {
-              console.log(seat.col);
+              setSeatCounts((pre) => ({ ...pre, [busId]: pre[busId] ? pre[busId] + 1 : 1 }));
               return { ...seat, col: "blue" };
             }
             if (seat.col === "blue") {
-              console.log(seat.col);
+              setSeatCounts((pre) => ({ ...pre, [busId]: pre[busId] ? pre[busId] - 1 : 0 }));
               return { ...seat, col: "black" };
             }
           }
           return seat;
         });
-        console.log(updatedSeats);
         return { ...value, seat: updatedSeats };
       }
       return value;
     });
-    console.log(updatedClickSeat);
-
     setColor(updatedClickSeat);
   };
+
+  const totalFee = data.map((val) => {
+    if (val.id === busId) {
+        if (seatCounts[busId] !== 0)
+        { 
+          return seatCounts[busId] * val.BusFee + 32.25;
+        }
+        else {
+          return 0.00;
+        }
+    }
+  })
+
+  
 
   const values = data.map((values, index) => {
     return (
@@ -259,7 +277,6 @@ const Booking = () => {
                   {values.BusFrom}
                 </span>
               </label>
-
               <p>
                 <Player
                   autoplay={true}
@@ -727,7 +744,7 @@ const Booking = () => {
           <div className="w-1/2">
             <div className="h-20 p-3">
               <p className="flex">
-                <span className=" text-lg">Komban Travels</span>
+                <span className=" text-lg">{values.BusName}</span>
 
                 <Player
                   autoplay={true}
@@ -741,27 +758,25 @@ const Booking = () => {
                     marginTop: "-4px",
                   }}
                 ></Player>
+                <span className="text-xs text-green-500 mt-[0.40rem] ml-2">High Safety and Hygiene</span>
               </p>
               <p className="text-sm text-zinc-400">
-                Volvo Multi-Axle A/C Semi Sleeper (2+2)
-              </p>
-              <p className="text-xs text-green-500">
-                {"=>"} High Safety and Hygiene
+                {values.BusType}
               </p>
             </div>
             <div className="flex">
               <div className="w-1/2 h-[15.7rem] p-3">
-                <p>Seats Selected :{}</p>
+                <p>Seats Selected : {seatCounts[busId]}</p>
                 <p className="mt-5">Boarding Point Details :</p>
-                <p className="text-green-400">Mumbai</p>
+                <p className="text-green-400">{values.BusFrom}</p>
                 <p className="border rounded bg-[#2B60DE]  text-center w-48 text-white">
-                  3:02 AM,19.10.2020
+                  {values.BusFtinme},19.10.2020
                 </p>
 
                 <p className="mt-5">Dropping Point Details :</p>
-                <p className="text-green-400">Chennai</p>
+                <p className="text-green-400">{values.BusTo}</p>
                 <p className="border rounded bg-[#2B60DE] text-center w-48 text-white">
-                  3:02 AM,19.10.2020
+                  {values.BusTtinme},19.10.2020
                 </p>
               </div>
               <div className="w-1/2 p-4">
@@ -769,7 +784,7 @@ const Booking = () => {
                 <div className=" h-48">
                   <ul className="flex p-2">
                     <li className="ml-5">Total Basefare</li>
-                    <li className="ml-auto">{"899"}</li>
+                    <li className="ml-auto">{values.BusFee}</li>
                   </ul>
                   <ul className="flex p-2">
                     <li className="ml-5">Taxes & fees</li>
@@ -777,7 +792,7 @@ const Booking = () => {
                   </ul>
                   <ul className="flex p-2 mt-6">
                     <li className="ml-5">Final Price</li>
-                    <li className="ml-auto">{"1000"}</li>
+                    <li className="ml-auto">{totalFee}</li>
                   </ul>
                   <button className="bg-[#23cf95] w-24 h-8 rounded-xl p-1 text-white font-bold mt-5 ml-[9rem]">
                     Continue
