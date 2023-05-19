@@ -10,12 +10,13 @@ import { useState } from "react";
 //   }, [seatCounts, busId]);
 // }
 
-const Booking = () => {
+const Booking = ({ details }) => {
+  console.log("det!:", details)
   const data = [
     {
       id: 1,
-      BusFrom: "Mumbai",
-      BusTo: "Chennai",
+      BusFrom: details[0].BusName,
+      BusTo: details[0].Available,
       BusName: "Parveen Travels",
       BusType: "Scania A/C Semi Sleeper (2+2)",
       BusRatings: "400 Ratings",
@@ -220,7 +221,7 @@ const Booking = () => {
     setSeat(!selectSeat);
   };
 
- // useSeatCountLogger(seatCounts, busId);
+  // useSeatCountLogger(seatCounts, busId);
 
   const colchg = (key, bsid) => {
     const updatedClickSeat = clickSeat.map((value) => {
@@ -247,17 +248,16 @@ const Booking = () => {
 
   const totalFee = data.map((val) => {
     if (val.id === busId) {
-        if (seatCounts[busId] !== 0)
-        { 
-          return seatCounts[busId] * val.BusFee + 32.25;
-        }
-        else {
-          return 0.00;
-        }
+      if (seatCounts[busId] !== 0) {
+        return seatCounts[busId] * val.BusFee + 32.25;
+      }
+      else {
+        return 0.00;
+      }
     }
   })
 
-  
+
 
   const values = data.map((values, index) => {
     return (
@@ -273,7 +273,7 @@ const Booking = () => {
             <div className="w-1/3 flex">
               <label className="block">
                 <p className="text-xl ml-[5.5rem]">{values.BusFtinme}</p>
-                <span class="block text-sm font-medium text-slate-500 ml-[5.5rem]">
+                <span className="block text-sm font-medium text-slate-500 ml-[5.5rem]">
                   {values.BusFrom}
                 </span>
               </label>
@@ -307,7 +307,7 @@ const Booking = () => {
                     }}
                   ></Player>
                 </p>
-                <span class="block text-sm font-medium text-slate-500 ml-[1.5rem] -mt-[3.8rem]">
+                <span className="block text-sm font-medium text-slate-500 ml-[1.5rem] -mt-[3.8rem]">
                   {values.BusTo}
                 </span>
               </label>
@@ -400,7 +400,7 @@ const Booking = () => {
           </div>
         </div>
 
-        <hr class="w-[35rem] h-1 mx-auto bg-gray-100 border-0 rounded dark:bg-gray-300" />
+        <hr className="w-[35rem] h-1 mx-auto bg-gray-100 border-0 rounded dark:bg-gray-300" />
 
         <div
           className={
@@ -807,21 +807,22 @@ const Booking = () => {
   });
 
   return (
-    <div className="container static rounded-xl p-10 overflow-y-auto max-h-[640px]">
-      <div className="container rounded-lg bg-slate-50 p-4 shadow-md absolute w-[72rem] -ml-5 -mt-12 hover:scale-105 duration-100">
-        <div className="flex">
-          <div className="text-green-600 w-1/3">
-            <span className="text-black">FROM : </span> {"Mumbai"}
+    <section className="bg-slate-200 rounded-2xl p-6 w-full h-[43rem]">
+      <div className="container static rounded-xl p-10 overflow-y-auto max-h-[640px]">
+        <div className="container rounded-lg bg-slate-50 p-4 shadow-md absolute w-[72rem] -ml-5 -mt-12 hover:scale-105 duration-100">
+          <div className="flex">
+            <div className="text-green-600 w-1/3">
+              <span className="text-black">FROM : </span> {details[0].Availability}
+            </div>
+            <div className="text-green-600 text-center w-1/3">
+              <span className="text-black">TO : </span> {details[0].BusTo}
+            </div>
+            <div className="text-end w-1/3">DEPARTURE DATE : {"19.10.2020"}</div>
           </div>
-          <div className="text-green-600 text-center w-1/3">
-            <span className="text-black">TO : </span> {"Chennai"}
-          </div>
-          <div className="text-end w-1/3">DEPARTURE DATE : {"19.10.2020"}</div>
         </div>
+        {values}
       </div>
-
-      {values}
-    </div>
+    </section>
   );
 };
 
