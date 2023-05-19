@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-//import axios from 'axios';
 import { RiArrowLeftRightLine } from "react-icons/ri";
 import Date from "./Date";
 var Citydata = require("../assets/cities.json");
 
 class Card extends Component {
-
   initialState = {
     FROM: "",
     TO: "",
@@ -13,18 +11,10 @@ class Card extends Component {
 
   state = this.initialState;
 
-  sendCopy = () => {
-    let copy = this.state;
-    this.props.copyState(copy);
-  }
-
   handleChange = (event) => {
-    // console.log("change ", event.target);
     const { name, value } = event.target;
-    if (name == 'FROM')
-      this.setState({ FROM: event.target.value });
-    else
-      this.setState({ TO: event.target.value });
+    //console.log(name,value);
+    this.setState({ [name]: [value] });
   };
 
   commitChange = () => {
@@ -42,35 +32,7 @@ class Card extends Component {
     this.setState({ TO: name });
   };
 
-  // handleSubmit = async (From, To) => {
-  //   try {
-  //     const response = await axios.get('http://localhost:8000', {
-  //       // name: 'ok'
-  //       employee: "John",
-  //       department: 'Wick'
-  //     });
-  //     this.setState({ flag: true })
-  //     console.log(response)
-  //   } catch (err) {
-  //     console.log("axios error", err)
-  //   }
-  // }
-  // handleSubmit = async (From, To) => {
-  //   try {
-  //     const res = await axios.get('http://localhost:8000');
-  //     console.log('first')
-  //     this.setState({ Details: res.data });
-  //     console.log(this.state.Details)
-  //     this.setState({ flag: true })
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
-
   render() {
-    const { handleSubmit } = this.props;
-    // console.log(handleSubmit)
     return (
       <div className="container bg-blue-300  rounded-lg -mt-[80px]">
         <div className="container  border border-white bg-white rounded-xl">
@@ -89,7 +51,7 @@ class Card extends Component {
 
           <div className="h-96 p-14">
             <label className="block">
-              <span className="block text-lg font-medium text-slate-700 ml-1">
+              <span class="block text-lg font-medium text-slate-700 ml-1">
                 From
               </span>
               <input
@@ -109,10 +71,10 @@ class Card extends Component {
               }).map((item, index) => (
                 <div
                   id="dropdownOffset"
-                  className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 mt-1"
+                  class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 mt-1"
                 >
                   <ul
-                    className="py-2 text-sm text-gray-300 dark:text-gray-200"
+                    class="py-2 text-sm text-gray-300 dark:text-gray-200"
                     aria-labelledby="dropdownDefault"
                   >
                     <li onClick={() => this.onSearch(item.name)} key={index}>
@@ -132,7 +94,7 @@ class Card extends Component {
             </div>
 
             <label>
-              <span className="block text-lg font-medium text-slate-700 ml-1">
+              <span class="block text-lg font-medium text-slate-700 ml-1">
                 To
               </span>
               <input
@@ -152,10 +114,10 @@ class Card extends Component {
               }).map((item, index) => (
                 <div
                   id="dropdownOffset"
-                  className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 mt-1"
+                  class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 mt-1"
                 >
                   <ul
-                    className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                    class="py-2 text-sm text-gray-700 dark:text-gray-200"
                     aria-labelledby="dropdownDefault"
                   >
                     <li onClick={() => this.onSearchh(item.name)} key={index}>
@@ -168,17 +130,9 @@ class Card extends Component {
 
             {<Date />}
 
-            <button
-              onClick={() => {
-                handleSubmit(this.state.FROM, this.state.TO);
-
-                this.sendCopy();
-              }}
-              className="mt-[1.4rem] ml-[8.5rem] w-36 bg-[#1ec273] h-10 rounded-2xl px-4 text-white font-bold"
-            >
+            <button className="mt-[1.4rem] ml-[8.5rem] w-36 bg-[#1ec273] h-10 rounded-2xl px-4 text-white font-bold">
               Search Bus
             </button>
-
           </div>
         </div>
       </div>
