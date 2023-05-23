@@ -26,7 +26,7 @@ class Navbar extends Component {
   handleSubmit = async (From, To) => {
     try {
       const res = await axios.get('http://localhost:8000', { params: { From, To } });
-      console.log('check ', res.data)
+      // console.log('check ', res.data)
       this.setState({ Details: res.data });
       console.log("12", this.state.Details)
       this.setState({ flag: true })

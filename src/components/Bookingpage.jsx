@@ -2,7 +2,8 @@ import { Player } from "@lottiefiles/react-lottie-player";
 import { GiSteeringWheel } from "react-icons/gi";
 import { TbArmchair } from "react-icons/tb";
 import { useState } from "react";
-
+import axios from "axios";
+import Dashboard from "./Dashboard";
 
 // function useSeatCountLogger(seatCounts, busId) {
 //   useEffect(() => {
@@ -11,217 +12,98 @@ import { useState } from "react";
 // }
 
 const Booking = ({ details }) => {
-  console.log("det!:", details)
-  const data = [
-    {
-      id: 1,
-      BusFrom: details[0].BusName,
-      BusTo: details[0].Available,
-      BusName: "Parveen Travels",
-      BusType: "Scania A/C Semi Sleeper (2+2)",
-      BusRatings: "400 Ratings",
-      BusFtinme: "11:00",
-      BusTtinme: "6:00",
-      BusFee: 999,
-      seat: [
-        { id: 1, col: "black", flag: 0 },
-        { id: 2, col: "black", flag: 0 },
-        { id: 3, col: "black", flag: 0 },
-        { id: 4, col: "black", flag: 0 },
-        { id: 5, col: "black", flag: 0 },
-        { id: 6, col: "black", flag: 0 },
-        { id: 7, col: "black", flag: 0 },
-        { id: 8, col: "black", flag: 0 },
-        { id: 9, col: "black", flag: 0 },
-        { id: 10, col: "black", flag: 0 },
-        { id: 11, col: "black", flag: 0 },
-        { id: 12, col: "black", flag: 0 },
-        { id: 13, col: "black", flag: 0 },
-        { id: 14, col: "black", flag: 0 },
-        { id: 15, col: "black", flag: 0 },
-        { id: 16, col: "black", flag: 0 },
-        { id: 17, col: "black", flag: 0 },
-        { id: 18, col: "black", flag: 0 },
-        { id: 19, col: "black", flag: 0 },
-        { id: 20, col: "black", flag: 0 },
-        { id: 21, col: "black", flag: 0 },
-        { id: 22, col: "black", flag: 0 },
-        { id: 23, col: "black", flag: 0 },
-        { id: 24, col: "black", flag: 0 },
-        { id: 25, col: "black", flag: 0 },
-        { id: 26, col: "black", flag: 0 },
-        { id: 27, col: "black", flag: 0 },
-        { id: 28, col: "black", flag: 0 },
-        { id: 29, col: "black", flag: 0 },
-        { id: 30, col: "black", flag: 0 },
-        { id: 31, col: "black", flag: 0 },
-        { id: 32, col: "black", flag: 0 },
-        { id: 33, col: "black", flag: 0 },
-        { id: 34, col: "black", flag: 0 },
-        { id: 35, col: "black", flag: 0 },
-        { id: 36, col: "black", flag: 0 },
-      ],
-    },
-    {
-      id: 2,
-      BusFrom: "Mumbai",
-      BusTo: "Chennai",
-      BusName: "Komban Travels",
-      BusType: "Volvo Multi-Axle A/C Semi Sleeper (2+2)",
-      BusRatings: "400 Ratings",
-      BusFtinme: "9:30",
-      BusTtinme: "4:30",
-      BusFee: 1200,
-      seat: [
-        { id: 1, col: "black", flag: 0 },
-        { id: 2, col: "black", flag: 0 },
-        { id: 3, col: "black", flag: 0 },
-        { id: 4, col: "black", flag: 0 },
-        { id: 5, col: "black", flag: 0 },
-        { id: 6, col: "black", flag: 0 },
-        { id: 7, col: "black", flag: 0 },
-        { id: 8, col: "black", flag: 0 },
-        { id: 9, col: "black", flag: 0 },
-        { id: 10, col: "pink", flag: 0 },
-        { id: 11, col: "black", flag: 0 },
-        { id: 12, col: "black", flag: 0 },
-        { id: 13, col: "black", flag: 0 },
-        { id: 14, col: "black", flag: 0 },
-        { id: 15, col: "black", flag: 0 },
-        { id: 16, col: "black", flag: 0 },
-        { id: 17, col: "black", flag: 0 },
-        { id: 18, col: "black", flag: 0 },
-        { id: 19, col: "black", flag: 0 },
-        { id: 20, col: "black", flag: 0 },
-        { id: 21, col: "black", flag: 0 },
-        { id: 22, col: "black", flag: 0 },
-        { id: 23, col: "black", flag: 0 },
-        { id: 24, col: "black", flag: 0 },
-        { id: 25, col: "black", flag: 0 },
-        { id: 26, col: "black", flag: 0 },
-        { id: 27, col: "black", flag: 0 },
-        { id: 28, col: "black", flag: 0 },
-        { id: 29, col: "black", flag: 0 },
-        { id: 30, col: "black", flag: 0 },
-        { id: 31, col: "black", flag: 0 },
-        { id: 32, col: "black", flag: 0 },
-        { id: 33, col: "black", flag: 0 },
-        { id: 34, col: "black", flag: 0 },
-        { id: 35, col: "black", flag: 0 },
-        { id: 36, col: "black", flag: 0 },
-      ],
-    },
-    {
-      id: 3,
-      BusFrom: "Mumbai",
-      BusTo: "Chennai",
-      BusName: "KPN Travels",
-      BusType: "Bharat Benz A/C Semi Sleeper (2+2)",
-      BusRatings: "400 Ratings",
-      BusFtinme: "8:30",
-      BusTtinme: "3:45",
-      BusFee: 1099,
-      seat: [
-        { id: 1, col: "black", flag: 0 },
-        { id: 2, col: "black", flag: 0 },
-        { id: 3, col: "black", flag: 0 },
-        { id: 4, col: "black", flag: 0 },
-        { id: 5, col: "black", flag: 0 },
-        { id: 6, col: "black", flag: 0 },
-        { id: 7, col: "black", flag: 0 },
-        { id: 8, col: "black", flag: 0 },
-        { id: 9, col: "black", flag: 0 },
-        { id: 10, col: "pink", flag: 0 },
-        { id: 11, col: "black", flag: 0 },
-        { id: 12, col: "black", flag: 0 },
-        { id: 13, col: "black", flag: 0 },
-        { id: 14, col: "black", flag: 0 },
-        { id: 15, col: "black", flag: 0 },
-        { id: 16, col: "black", flag: 0 },
-        { id: 17, col: "black", flag: 0 },
-        { id: 18, col: "black", flag: 0 },
-        { id: 19, col: "black", flag: 0 },
-        { id: 20, col: "black", flag: 0 },
-        { id: 21, col: "black", flag: 0 },
-        { id: 22, col: "black", flag: 0 },
-        { id: 23, col: "black", flag: 0 },
-        { id: 24, col: "black", flag: 0 },
-        { id: 25, col: "black", flag: 0 },
-        { id: 26, col: "black", flag: 0 },
-        { id: 27, col: "black", flag: 0 },
-        { id: 28, col: "black", flag: 0 },
-        { id: 29, col: "black", flag: 0 },
-        { id: 30, col: "black", flag: 0 },
-        { id: 31, col: "black", flag: 0 },
-        { id: 32, col: "black", flag: 0 },
-        { id: 33, col: "black", flag: 0 },
-        { id: 34, col: "black", flag: 0 },
-        { id: 35, col: "black", flag: 0 },
-        { id: 36, col: "black", flag: 0 },
-      ],
-    },
-    {
-      id: 4,
-      BusFrom: "Mumbai",
-      BusTo: "Chennai",
-      BusName: "SKS Travels",
-      BusType: "Volvo A/C B11R Multi Axle Semi Sleeper (2+2)",
-      BusRatings: "400 Ratings",
-      BusFtinme: "11:50",
-      BusTtinme: "8:30",
-      BusFee: 899,
-      seat: [
-        { id: 1, col: "black", flag: 0 },
-        { id: 2, col: "black", flag: 0 },
-        { id: 3, col: "black", flag: 0 },
-        { id: 4, col: "black", flag: 0 },
-        { id: 5, col: "black", flag: 0 },
-        { id: 6, col: "black", flag: 0 },
-        { id: 7, col: "black", flag: 0 },
-        { id: 8, col: "black", flag: 0 },
-        { id: 9, col: "black", flag: 0 },
-        { id: 10, col: "black", flag: 0 },
-        { id: 11, col: "black", flag: 0 },
-        { id: 12, col: "black", flag: 0 },
-        { id: 13, col: "black", flag: 0 },
-        { id: 14, col: "black", flag: 0 },
-        { id: 15, col: "black", flag: 0 },
-        { id: 16, col: "black", flag: 0 },
-        { id: 17, col: "black", flag: 0 },
-        { id: 18, col: "black", flag: 0 },
-        { id: 19, col: "black", flag: 0 },
-        { id: 20, col: "black", flag: 0 },
-        { id: 21, col: "black", flag: 0 },
-        { id: 22, col: "black", flag: 0 },
-        { id: 23, col: "black", flag: 0 },
-        { id: 24, col: "black", flag: 0 },
-        { id: 25, col: "black", flag: 0 },
-        { id: 26, col: "black", flag: 0 },
-        { id: 27, col: "black", flag: 0 },
-        { id: 28, col: "black", flag: 0 },
-        { id: 29, col: "black", flag: 0 },
-        { id: 30, col: "black", flag: 0 },
-        { id: 31, col: "black", flag: 0 },
-        { id: 32, col: "black", flag: 0 },
-        { id: 33, col: "black", flag: 0 },
-        { id: 34, col: "black", flag: 0 },
-        { id: 35, col: "black", flag: 0 },
-        { id: 36, col: "black", flag: 0 },
-      ],
-    },
-  ];
+  const data = details.map((val, idx) => ({
+    id: details[idx].id,
+    BusFrom: details[idx].BusName,
+    BusTo: details[idx].BusTo,
+    BusName: details[idx].BusName,
+    BusType: details[idx].BusType,
+    Arrival: details[idx].Arrival,
+    Departure: details[idx].Departure,
+    BusFee: details[idx].BusFee,
+    seat: [
+      { id: 1, col: "black", flag: 0 },
+      { id: 2, col: "black", flag: 0 },
+      { id: 3, col: "black", flag: 0 },
+      { id: 4, col: "black", flag: 0 },
+      { id: 5, col: "black", flag: 0 },
+      { id: 6, col: "black", flag: 0 },
+      { id: 7, col: "black", flag: 0 },
+      { id: 8, col: "black", flag: 0 },
+      { id: 9, col: "black", flag: 0 },
+      { id: 10, col: "black", flag: 0 },
+      { id: 11, col: "black", flag: 0 },
+      { id: 12, col: "black", flag: 0 },
+      { id: 13, col: "black", flag: 0 },
+      { id: 14, col: "black", flag: 0 },
+      { id: 15, col: "black", flag: 0 },
+      { id: 16, col: "black", flag: 0 },
+      { id: 17, col: "black", flag: 0 },
+      { id: 18, col: "black", flag: 0 },
+      { id: 19, col: "black", flag: 0 },
+      { id: 20, col: "black", flag: 0 },
+      { id: 21, col: "black", flag: 0 },
+      { id: 22, col: "black", flag: 0 },
+      { id: 23, col: "black", flag: 0 },
+      { id: 24, col: "black", flag: 0 },
+      { id: 25, col: "black", flag: 0 },
+      { id: 26, col: "black", flag: 0 },
+      { id: 27, col: "black", flag: 0 },
+      { id: 28, col: "black", flag: 0 },
+      { id: 29, col: "black", flag: 0 },
+      { id: 30, col: "black", flag: 0 },
+      { id: 31, col: "black", flag: 0 },
+      { id: 32, col: "black", flag: 0 },
+      { id: 33, col: "black", flag: 0 },
+      { id: 34, col: "black", flag: 0 },
+      { id: 35, col: "black", flag: 0 },
+      { id: 36, col: "black", flag: 0 },
+    ],
+  }
+  ))
 
+  const [redirectToDash, setRedirectToDash] = useState(false)
   const [selectSeat, setSeat] = useState(false);
   const [busId, setBusId] = useState(null);
   const [clickSeat, setColor] = useState(data);
   const [seatCounts, setSeatCounts] = useState({});
+  const [busDetails, setBusDetails] = useState([]);
+  const [busFee, setBusFee] = useState(null);
 
   const showChange = (busId) => {
     setBusId(busId);
     setSeat(!selectSeat);
   };
 
-  // useSeatCountLogger(seatCounts, busId);
+  const handleCheckout = async (values, totalFee) => {
+    try {
+      //it redirect to payment mode.. 
+      const response = await axios.get('http://localhost:8000/checkout/',
+        {
+          params:
+            { values: JSON.stringify(values), totalFee: totalFee[0] }
+        }
+      )
+
+      const responseData = response.data;
+      console.log('res,', responseData)
+      if (responseData.url) {
+        window.location.assign(responseData.url);
+      }
+
+      // setBusDetails(values)
+      // setBusFee(totalFee)
+      // setRedirectToDash(true)
+
+    }
+
+    catch (error) {
+      console.error(error);
+    }
+  };
+  if (redirectToDash) {
+    return <Dashboard busDetails={busDetails} totalFee={busFee} />
+  }
 
   const colchg = (key, bsid) => {
     const updatedClickSeat = clickSeat.map((value) => {
@@ -230,10 +112,12 @@ const Booking = ({ details }) => {
           if (seat.id === key) {
             if (seat.col === "black") {
               setSeatCounts((pre) => ({ ...pre, [busId]: pre[busId] ? pre[busId] + 1 : 1 }));
+              console.log("blue");
               return { ...seat, col: "blue" };
             }
             if (seat.col === "blue") {
               setSeatCounts((pre) => ({ ...pre, [busId]: pre[busId] ? pre[busId] - 1 : 0 }));
+              console.log("black");
               return { ...seat, col: "black" };
             }
           }
@@ -257,8 +141,6 @@ const Booking = ({ details }) => {
     }
   })
 
-
-
   const values = data.map((values, index) => {
     return (
       <div className="container mt-4 bg-white rounded-lg shadow p-4">
@@ -272,7 +154,7 @@ const Booking = ({ details }) => {
 
             <div className="w-1/3 flex">
               <label className="block">
-                <p className="text-xl ml-[5.5rem]">{values.BusFtinme}</p>
+                <p className="text-xl ml-[5.5rem]">{values.Arrival}</p>
                 <span className="block text-sm font-medium text-slate-500 ml-[5.5rem]">
                   {values.BusFrom}
                 </span>
@@ -293,7 +175,7 @@ const Booking = ({ details }) => {
               </p>
               <label className="block">
                 <p className="text-xl ml-[1.5rem]">
-                  {values.BusTtinme}
+                  {values.Departure}
                   <Player
                     autoplay={true}
                     loop={true}
@@ -351,7 +233,7 @@ const Booking = ({ details }) => {
             </div>
 
             <p className="border-r ml-3 h-8 mr-3 border-gray-700"></p>
-            <p className=" text-xs text-zinc-400 mt-2">{values.BusRatings}</p>
+            <p className=" text-xs text-zinc-400 mt-2">400 ratings</p>
           </div>
 
           <div className="flex mt-3">
@@ -770,13 +652,13 @@ const Booking = ({ details }) => {
                 <p className="mt-5">Boarding Point Details :</p>
                 <p className="text-green-400">{values.BusFrom}</p>
                 <p className="border rounded bg-[#2B60DE]  text-center w-48 text-white">
-                  {values.BusFtinme},19.10.2020
+                  {values.Arrival},19.10.2020
                 </p>
 
                 <p className="mt-5">Dropping Point Details :</p>
                 <p className="text-green-400">{values.BusTo}</p>
                 <p className="border rounded bg-[#2B60DE] text-center w-48 text-white">
-                  {values.BusTtinme},19.10.2020
+                  {values.Departure},19.10.2020
                 </p>
               </div>
               <div className="w-1/2 p-4">
@@ -794,7 +676,7 @@ const Booking = ({ details }) => {
                     <li className="ml-5">Final Price</li>
                     <li className="ml-auto">{totalFee}</li>
                   </ul>
-                  <button className="bg-[#23cf95] w-24 h-8 rounded-xl p-1 text-white font-bold mt-5 ml-[9rem]">
+                  <button onClick={() => handleCheckout(values, totalFee)} className="bg-[#23cf95] w-24 h-8 rounded-xl p-1 text-white font-bold mt-5 ml-[9rem]">
                     Continue
                   </button>
                 </div>
@@ -812,7 +694,7 @@ const Booking = ({ details }) => {
         <div className="container rounded-lg bg-slate-50 p-4 shadow-md absolute w-[72rem] -ml-5 -mt-12 hover:scale-105 duration-100">
           <div className="flex">
             <div className="text-green-600 w-1/3">
-              <span className="text-black">FROM : </span> {details[0].Availability}
+              <span className="text-black">FROM : </span> {details[0].BusFrom}
             </div>
             <div className="text-green-600 text-center w-1/3">
               <span className="text-black">TO : </span> {details[0].BusTo}
