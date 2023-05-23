@@ -14,5 +14,12 @@ class Booking(models.Model):
     BusType = models.CharField(max_length=20)
     Arrival = models.CharField(max_length=20,default=1)
     Departure = models.CharField(max_length=20,default=5)
-    BusFee = models.PositiveIntegerField(default=400)
+    BusFee = models.PositiveIntegerField()
     Availability = models.PositiveIntegerField(default=27)
+
+class Register(models.Model):
+    name = models.TextField(max_length=20)
+    email = models.EmailField(primary_key=True)
+    password = models.TextField(max_length=20) 
+    bookedTicket = models.PositiveIntegerField(default=0)
+    bookedId = models.PositiveIntegerField(default=0)
