@@ -1,226 +1,87 @@
 import { Player } from "@lottiefiles/react-lottie-player";
 import { GiSteeringWheel } from "react-icons/gi";
 import { TbArmchair } from "react-icons/tb";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 
-// function useSeatCountLogger(seatCounts, busId) {
-//   useEffect(() => {
-//     var sct = seatCounts[busId];
-//   }, [seatCounts, busId]);
-// }
+const Booking = (props) => {
+  const [clickSeat,setColor]= useState([])
+  const { Fromm, Too } = props;
 
-const Booking = () => {
-  const data = [
-    {
-      id: 1,
-      BusFrom: "Mumbai",
-      BusTo: "Chennai",
-      BusName: "Parveen Travels",
-      BusType: "Scania A/C Semi Sleeper (2+2)",
-      BusRatings: "400 Ratings",
-      BusFtinme: "11:00",
-      BusTtinme: "6:00",
-      BusFee: 999,
-      seat: [
-        { id: 1, col: "black", flag: 0 },
-        { id: 2, col: "black", flag: 0 },
-        { id: 3, col: "black", flag: 0 },
-        { id: 4, col: "black", flag: 0 },
-        { id: 5, col: "black", flag: 0 },
-        { id: 6, col: "black", flag: 0 },
-        { id: 7, col: "black", flag: 0 },
-        { id: 8, col: "black", flag: 0 },
-        { id: 9, col: "black", flag: 0 },
-        { id: 10, col: "black", flag: 0 },
-        { id: 11, col: "black", flag: 0 },
-        { id: 12, col: "black", flag: 0 },
-        { id: 13, col: "black", flag: 0 },
-        { id: 14, col: "black", flag: 0 },
-        { id: 15, col: "black", flag: 0 },
-        { id: 16, col: "black", flag: 0 },
-        { id: 17, col: "black", flag: 0 },
-        { id: 18, col: "black", flag: 0 },
-        { id: 19, col: "black", flag: 0 },
-        { id: 20, col: "black", flag: 0 },
-        { id: 21, col: "black", flag: 0 },
-        { id: 22, col: "black", flag: 0 },
-        { id: 23, col: "black", flag: 0 },
-        { id: 24, col: "black", flag: 0 },
-        { id: 25, col: "black", flag: 0 },
-        { id: 26, col: "black", flag: 0 },
-        { id: 27, col: "black", flag: 0 },
-        { id: 28, col: "black", flag: 0 },
-        { id: 29, col: "black", flag: 0 },
-        { id: 30, col: "black", flag: 0 },
-        { id: 31, col: "black", flag: 0 },
-        { id: 32, col: "black", flag: 0 },
-        { id: 33, col: "black", flag: 0 },
-        { id: 34, col: "black", flag: 0 },
-        { id: 35, col: "black", flag: 0 },
-        { id: 36, col: "black", flag: 0 },
-      ],
-    },
-    {
-      id: 2,
-      BusFrom: "Mumbai",
-      BusTo: "Chennai",
-      BusName: "Komban Travels",
-      BusType: "Volvo Multi-Axle A/C Semi Sleeper (2+2)",
-      BusRatings: "400 Ratings",
-      BusFtinme: "9:30",
-      BusTtinme: "4:30",
-      BusFee: 1200,
-      seat: [
-        { id: 1, col: "black", flag: 0 },
-        { id: 2, col: "black", flag: 0 },
-        { id: 3, col: "black", flag: 0 },
-        { id: 4, col: "black", flag: 0 },
-        { id: 5, col: "black", flag: 0 },
-        { id: 6, col: "black", flag: 0 },
-        { id: 7, col: "black", flag: 0 },
-        { id: 8, col: "black", flag: 0 },
-        { id: 9, col: "black", flag: 0 },
-        { id: 10, col: "pink", flag: 0 },
-        { id: 11, col: "black", flag: 0 },
-        { id: 12, col: "black", flag: 0 },
-        { id: 13, col: "black", flag: 0 },
-        { id: 14, col: "black", flag: 0 },
-        { id: 15, col: "black", flag: 0 },
-        { id: 16, col: "black", flag: 0 },
-        { id: 17, col: "black", flag: 0 },
-        { id: 18, col: "black", flag: 0 },
-        { id: 19, col: "black", flag: 0 },
-        { id: 20, col: "black", flag: 0 },
-        { id: 21, col: "black", flag: 0 },
-        { id: 22, col: "black", flag: 0 },
-        { id: 23, col: "black", flag: 0 },
-        { id: 24, col: "black", flag: 0 },
-        { id: 25, col: "black", flag: 0 },
-        { id: 26, col: "black", flag: 0 },
-        { id: 27, col: "black", flag: 0 },
-        { id: 28, col: "black", flag: 0 },
-        { id: 29, col: "black", flag: 0 },
-        { id: 30, col: "black", flag: 0 },
-        { id: 31, col: "black", flag: 0 },
-        { id: 32, col: "black", flag: 0 },
-        { id: 33, col: "black", flag: 0 },
-        { id: 34, col: "black", flag: 0 },
-        { id: 35, col: "black", flag: 0 },
-        { id: 36, col: "black", flag: 0 },
-      ],
-    },
-    {
-      id: 3,
-      BusFrom: "Mumbai",
-      BusTo: "Chennai",
-      BusName: "KPN Travels",
-      BusType: "Bharat Benz A/C Semi Sleeper (2+2)",
-      BusRatings: "400 Ratings",
-      BusFtinme: "8:30",
-      BusTtinme: "3:45",
-      BusFee: 1099,
-      seat: [
-        { id: 1, col: "black", flag: 0 },
-        { id: 2, col: "black", flag: 0 },
-        { id: 3, col: "black", flag: 0 },
-        { id: 4, col: "black", flag: 0 },
-        { id: 5, col: "black", flag: 0 },
-        { id: 6, col: "black", flag: 0 },
-        { id: 7, col: "black", flag: 0 },
-        { id: 8, col: "black", flag: 0 },
-        { id: 9, col: "black", flag: 0 },
-        { id: 10, col: "pink", flag: 0 },
-        { id: 11, col: "black", flag: 0 },
-        { id: 12, col: "black", flag: 0 },
-        { id: 13, col: "black", flag: 0 },
-        { id: 14, col: "black", flag: 0 },
-        { id: 15, col: "black", flag: 0 },
-        { id: 16, col: "black", flag: 0 },
-        { id: 17, col: "black", flag: 0 },
-        { id: 18, col: "black", flag: 0 },
-        { id: 19, col: "black", flag: 0 },
-        { id: 20, col: "black", flag: 0 },
-        { id: 21, col: "black", flag: 0 },
-        { id: 22, col: "black", flag: 0 },
-        { id: 23, col: "black", flag: 0 },
-        { id: 24, col: "black", flag: 0 },
-        { id: 25, col: "black", flag: 0 },
-        { id: 26, col: "black", flag: 0 },
-        { id: 27, col: "black", flag: 0 },
-        { id: 28, col: "black", flag: 0 },
-        { id: 29, col: "black", flag: 0 },
-        { id: 30, col: "black", flag: 0 },
-        { id: 31, col: "black", flag: 0 },
-        { id: 32, col: "black", flag: 0 },
-        { id: 33, col: "black", flag: 0 },
-        { id: 34, col: "black", flag: 0 },
-        { id: 35, col: "black", flag: 0 },
-        { id: 36, col: "black", flag: 0 },
-      ],
-    },
-    {
-      id: 4,
-      BusFrom: "Mumbai",
-      BusTo: "Chennai",
-      BusName: "SKS Travels",
-      BusType: "Volvo A/C B11R Multi Axle Semi Sleeper (2+2)",
-      BusRatings: "400 Ratings",
-      BusFtinme: "11:50",
-      BusTtinme: "8:30",
-      BusFee: 899,
-      seat: [
-        { id: 1, col: "black", flag: 0 },
-        { id: 2, col: "black", flag: 0 },
-        { id: 3, col: "black", flag: 0 },
-        { id: 4, col: "black", flag: 0 },
-        { id: 5, col: "black", flag: 0 },
-        { id: 6, col: "black", flag: 0 },
-        { id: 7, col: "black", flag: 0 },
-        { id: 8, col: "black", flag: 0 },
-        { id: 9, col: "black", flag: 0 },
-        { id: 10, col: "black", flag: 0 },
-        { id: 11, col: "black", flag: 0 },
-        { id: 12, col: "black", flag: 0 },
-        { id: 13, col: "black", flag: 0 },
-        { id: 14, col: "black", flag: 0 },
-        { id: 15, col: "black", flag: 0 },
-        { id: 16, col: "black", flag: 0 },
-        { id: 17, col: "black", flag: 0 },
-        { id: 18, col: "black", flag: 0 },
-        { id: 19, col: "black", flag: 0 },
-        { id: 20, col: "black", flag: 0 },
-        { id: 21, col: "black", flag: 0 },
-        { id: 22, col: "black", flag: 0 },
-        { id: 23, col: "black", flag: 0 },
-        { id: 24, col: "black", flag: 0 },
-        { id: 25, col: "black", flag: 0 },
-        { id: 26, col: "black", flag: 0 },
-        { id: 27, col: "black", flag: 0 },
-        { id: 28, col: "black", flag: 0 },
-        { id: 29, col: "black", flag: 0 },
-        { id: 30, col: "black", flag: 0 },
-        { id: 31, col: "black", flag: 0 },
-        { id: 32, col: "black", flag: 0 },
-        { id: 33, col: "black", flag: 0 },
-        { id: 34, col: "black", flag: 0 },
-        { id: 35, col: "black", flag: 0 },
-        { id: 36, col: "black", flag: 0 },
-      ],
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/buses", {
+          params: { Fromm, Too },
+        });
+        
+        console.log("Response:", response.data);
+        const dat = response.data;
+        setColor(dat);
 
+      } catch (error) {
+
+        console.log("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [Fromm, Too]);
+
+
+  
   const [selectSeat, setSeat] = useState(false);
   const [busId, setBusId] = useState(null);
-  const [clickSeat, setColor] = useState(data);
   const [seatCounts, setSeatCounts] = useState({});
+  const [selectedSeats, setSelectedSeats] = useState([]);
+
 
   const showChange = (busId) => {
     setBusId(busId);
     setSeat(!selectSeat);
   };
 
- // useSeatCountLogger(seatCounts, busId);
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     axios.post("http://localhost:8000/addseat", selectedSeats)
+  //       .then((response) => {
+  //         console.log("Seats added successfully:", response.data);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error adding seats:", error);
+  //       });
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // };
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    try {
+      const payload = {
+        busId: busId,
+        selectedSeats: selectedSeats,
+      };
+  
+      axios.post("http://localhost:8000/addseat", payload)
+        .then((response) => {
+          console.log("Seats added successfully:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error adding seats:", error);
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  
+  
+  
+  
+
 
   const colchg = (key, bsid) => {
     const updatedClickSeat = clickSeat.map((value) => {
@@ -229,15 +90,21 @@ const Booking = () => {
           if (seat.id === key) {
             if (seat.col === "black") {
               setSeatCounts((pre) => ({ ...pre, [busId]: pre[busId] ? pre[busId] + 1 : 1 }));
+              setSelectedSeats((prevSeats) => [...prevSeats, key]); // Push key to array
               return { ...seat, col: "blue" };
+                            
             }
             if (seat.col === "blue") {
               setSeatCounts((pre) => ({ ...pre, [busId]: pre[busId] ? pre[busId] - 1 : 0 }));
+              setSelectedSeats((prevSeats) =>
+              prevSeats.filter((seatKey) => seatKey !== key) // Revoke key from array
+            );
               return { ...seat, col: "black" };
             }
           }
           return seat;
         });
+        //console.log(selectedSeats)
         return { ...value, seat: updatedSeats };
       }
       return value;
@@ -245,7 +112,7 @@ const Booking = () => {
     setColor(updatedClickSeat);
   };
 
-  const totalFee = data.map((val) => {
+  const totalFee = clickSeat.map((val) => {
     if (val.id === busId) {
         if (seatCounts[busId] !== 0)
         { 
@@ -257,23 +124,21 @@ const Booking = () => {
     }
   })
 
-  
-
-  const values = data.map((values, index) => {
+  const values = clickSeat.map((values, index) => {
     return (
-      <div className="container mt-4 bg-white rounded-lg shadow p-4">
-        <div className="p-4 w-full">
-          <div className="flex">
-            <div className="w-1/3 container ">
-              <p className="text-xl" key={index}>
+      <div className='container mt-4 bg-white rounded-lg shadow p-4'>
+        <div className='p-4 w-full'>
+          <div className='flex'>
+            <div className='w-1/3 container '>
+              <p className='text-xl' key={index}>
                 {values.BusName}
               </p>
             </div>
 
-            <div className="w-1/3 flex">
-              <label className="block">
-                <p className="text-xl ml-[5.5rem]">{values.BusFtinme}</p>
-                <span class="block text-sm font-medium text-slate-500 ml-[5.5rem]">
+            <div className='w-1/3 flex'>
+              <label className='block'>
+                <p className='text-xl ml-[5.5rem]'>{values.BusFtinme}</p>
+                <span class='block text-sm font-medium text-slate-500 ml-[5.5rem]'>
                   {values.BusFrom}
                 </span>
               </label>
@@ -282,116 +147,111 @@ const Booking = () => {
                   autoplay={true}
                   loop={true}
                   controls={true}
-                  src="https://assets4.lottiefiles.com/packages/lf20_Z1UKyUn7Kv.json"
+                  src='https://assets4.lottiefiles.com/packages/lf20_Z1UKyUn7Kv.json'
                   style={{
                     height: "100px",
                     width: "50px",
                     marginLeft: "20px",
                     marginTop: "-35px",
-                  }}
-                ></Player>
+                  }}></Player>
               </p>
-              <label className="block">
-                <p className="text-xl ml-[1.5rem]">
+              <label className='block'>
+                <p className='text-xl ml-[1.5rem]'>
                   {values.BusTtinme}
                   <Player
                     autoplay={true}
                     loop={true}
                     controls={true}
-                    src="https://assets7.lottiefiles.com/temp/lf20_7Qkvy7.json"
+                    src='https://assets7.lottiefiles.com/temp/lf20_7Qkvy7.json'
                     style={{
                       height: "150px",
                       width: "150px",
                       marginLeft: "0px",
                       marginTop: "-90px",
-                    }}
-                  ></Player>
+                    }}></Player>
                 </p>
-                <span class="block text-sm font-medium text-slate-500 ml-[1.5rem] -mt-[3.8rem]">
+                <span class='block text-sm font-medium text-slate-500 ml-[1.5rem] -mt-[3.8rem]'>
                   {values.BusTo}
                 </span>
               </label>
             </div>
 
-            <div className="w-1/3 flex -mt-5">
-              <div className="w-1/2">
-                <ul className="flex">
+            <div className='w-1/3 flex -mt-5'>
+              <div className='w-1/2'>
+                <ul className='flex'>
                   <li>
                     <Player
                       autoplay={true}
                       loop={true}
                       controls={true}
-                      src="https://assets7.lottiefiles.com/private_files/lf30_y4c7izgv.json"
+                      src='https://assets7.lottiefiles.com/private_files/lf30_y4c7izgv.json'
                       style={{
                         height: "100px",
                         width: "100px",
                         marginLeft: "",
                         marginTop: "-10px",
-                      }}
-                    ></Player>
+                      }}></Player>
                   </li>
 
-                  <li className="mt-7 text-2xl">{values.BusFee}</li>
+                  <li className='mt-7 text-2xl'>{values.BusFee}</li>
                 </ul>
               </div>
-              <div className="w-1/2 text-zinc-400 mt-5">
+              <div className='w-1/2 text-zinc-400 mt-5'>
                 <ul>
-                  <li className="text-center">18 window seats</li>
-                  <li className="text-center">Total 36 seats</li>
+                  <li className='text-center'>18 window seats</li>
+                  <li className='text-center'>Total 36 seats</li>
                 </ul>
               </div>
             </div>
           </div>
-          <p className=" text-sm text-zinc-400 mb-2">
-            {"Volvo Multi-Axle A/C Semi Sleeper (2+2)"}
+          <p className=' text-sm text-zinc-400 mb-2'>
+            {values.BusType}
           </p>
-          <div className="flex">
-            <div className="container text-xs w-9 h-[1.3rem] p-1 rounded-sm bg-green-600 text-white mt-[0.35rem]">
+          <div className='flex'>
+            <div className='container text-xs w-9 h-[1.3rem] p-1 rounded-sm bg-green-600 text-white mt-[0.35rem]'>
               4.5/5
             </div>
 
-            <p className="border-r ml-3 h-8 mr-3 border-gray-700"></p>
-            <p className=" text-xs text-zinc-400 mt-2">{values.BusRatings}</p>
+            <p className='border-r ml-3 h-8 mr-3 border-gray-700'></p>
+            <p className=' text-xs text-zinc-400 mt-2'>{values.BusRatings}</p>
           </div>
 
-          <div className="flex mt-3">
-            <div className="w-1/2 ">
+          <div className='flex mt-3'>
+            <div className='w-1/2 '>
               <p>
-                <ul className="flex text-xs">
+                <ul className='flex text-xs'>
                   <li>
                     <Player
                       autoplay={true}
                       loop={true}
                       controls={true}
-                      src="https://assets3.lottiefiles.com/packages/lf20_yEtvMgerwc.json"
+                      src='https://assets3.lottiefiles.com/packages/lf20_yEtvMgerwc.json'
                       style={{
                         height: "15px",
                         width: "15px",
                         marginLeft: "0px",
                         marginTop: "13px",
-                      }}
-                    ></Player>
+                      }}></Player>
                   </li>
 
-                  <li className="ml-2 mt-[0.8rem]">People choice for</li>
-                  <li className="ml-1 mt-[0.2rem] text-xl">.</li>
-                  <li className="ml-1 mt-[0.8rem]">Comfortable Seats</li>
-                  <li className="ml-1 mt-[0.2rem] text-xl">.</li>
-                  <li className="ml-1 mt-[0.8rem]">On Time</li>
-                  <li className="ml-1 mt-[0.2rem] text-xl">.</li>
-                  <li className="ml-1 mt-[0.8rem]">Courteous Staff</li>
-                  <li className="ml-1 mt-[0.2rem] text-xl">.</li>
-                  <li className="ml-1 mt-[0.8rem]">Clean Bus</li>
+                  <li className='ml-2 mt-[0.8rem]'>People choice for</li>
+                  <li className='ml-1 mt-[0.2rem] text-xl'>.</li>
+                  <li className='ml-1 mt-[0.8rem]'>Comfortable Seats</li>
+                  <li className='ml-1 mt-[0.2rem] text-xl'>.</li>
+                  <li className='ml-1 mt-[0.8rem]'>On Time</li>
+                  <li className='ml-1 mt-[0.2rem] text-xl'>.</li>
+                  <li className='ml-1 mt-[0.8rem]'>Courteous Staff</li>
+                  <li className='ml-1 mt-[0.2rem] text-xl'>.</li>
+                  <li className='ml-1 mt-[0.8rem]'>Clean Bus</li>
                 </ul>
               </p>
             </div>
-            <div className="w-1/2">
+            <div className='w-1/2'>
               <button
-                className="bg-[#23cf95] w-36 ml-[23rem] -mt-5 h-10 rounded-xl p-2 text-white font-bold"
+                className='bg-[#23cf95] w-36 ml-[23rem] -mt-5 h-10 rounded-xl p-2 text-white font-bold'
                 onClick={() => {
                   showChange(values.id);
-                }}
-              >
+                }}>
                 {selectSeat && busId === values.id
                   ? "Hide Seat"
                   : "Select Seat"}
@@ -400,47 +260,46 @@ const Booking = () => {
           </div>
         </div>
 
-        <hr class="w-[35rem] h-1 mx-auto bg-gray-100 border-0 rounded dark:bg-gray-300" />
+        <hr class='w-[35rem] h-1 mx-auto bg-gray-100 border-0 rounded dark:bg-gray-300' />
 
         <div
           className={
             selectSeat && busId === values.id ? "h-[20.8rem] flex" : "hidden"
-          }
-        >
-          <div className="w-1/2 p-2 flex">
-            <div className="w-1/2">
-              <div className="ml-16">
+          }>
+          <div className='w-1/2 p-2 flex'>
+            <div className='w-1/2'>
+              <div className='ml-16'>
                 <ul>
-                  <li className="flex mb-4 mt-24">
-                    {<TbArmchair size={25} color="gray" />}Booked
+                  <li className='flex mb-4 mt-24'>
+                    {<TbArmchair size={25} color='gray' />}Booked
                   </li>
-                  <li className="flex mb-4">
+                  <li className='flex mb-4'>
                     {<TbArmchair size={25} />}Available
                   </li>
-                  <li className="flex mb-4">
-                    {<TbArmchair size={25} color="pink" />}Ladies
+                  <li className='flex mb-4'>
+                    {<TbArmchair size={25} color='pink' />}Ladies
                   </li>
-                  <li className="flex ">
-                    {<TbArmchair size={25} color="blue" />}Selected
+                  <li className='flex '>
+                    {<TbArmchair size={25} color='blue' />}Selected
                   </li>
                 </ul>
               </div>
             </div>
 
-            <div className="rounded-xl border border-black w-1/2 p-6">
-              <div className="ml-36 -mt-1 mb-1">
+            <div className='rounded-xl border border-black w-1/2 p-6'>
+              <div className='ml-36 -mt-1 mb-1'>
                 {<GiSteeringWheel size={25} />}
               </div>
               <hr />
-              <div className="flex">
-                <div className="w-1/2 flex h-64 p-6">
-                  <div className="ml-3 flex">
-                    <div className="w-1/2 -mt-3">
+              <div className='flex'>
+                <div className='w-1/2 flex h-64 p-6'>
+                  <div className='ml-3 flex'>
+                    <div className='w-1/2 -mt-3'>
                       {
                         <TbArmchair
                           size={25}
                           key={1}
-                          color={clickSeat[values.id - 1]?.seat[0]?.col}
+                          color={clickSeat[values.id-1]?.seat[0]?.col}
                           onClick={() => colchg(1, values.id)}
                         />
                       }
@@ -509,7 +368,7 @@ const Booking = () => {
                         />
                       }
                     </div>
-                    <div className="w-1/2 -mt-3">
+                    <div className='w-1/2 -mt-3'>
                       {
                         <TbArmchair
                           size={25}
@@ -586,9 +445,9 @@ const Booking = () => {
                   </div>
                 </div>
 
-                <div className="w-1/2 h-64 flex p-6">
-                  <div className="-ml-3 flex">
-                    <div className="w-1/2 -mt-3">
+                <div className='w-1/2 h-64 flex p-6'>
+                  <div className='-ml-3 flex'>
+                    <div className='w-1/2 -mt-3'>
                       {
                         <TbArmchair
                           size={25}
@@ -662,7 +521,7 @@ const Booking = () => {
                         />
                       }
                     </div>
-                    <div className="w-1/2 -mt-3">
+                    <div className='w-1/2 -mt-3'>
                       {
                         <TbArmchair
                           size={25}
@@ -741,60 +600,59 @@ const Booking = () => {
               </div>
             </div>
           </div>
-          <div className="w-1/2">
-            <div className="h-20 p-3">
-              <p className="flex">
-                <span className=" text-lg">{values.BusName}</span>
+          <div className='w-1/2'>
+            <div className='h-20 p-3'>
+              <p className='flex'>
+                <span className=' text-lg'>{values.BusName}</span>
 
                 <Player
                   autoplay={true}
                   loop={true}
                   controls={true}
-                  src="https://assets1.lottiefiles.com/packages/lf20_kXpz0jNKs6.json"
+                  src='https://assets1.lottiefiles.com/packages/lf20_kXpz0jNKs6.json'
                   style={{
                     height: "30px",
                     width: "30px",
                     marginLeft: "10px",
                     marginTop: "-4px",
-                  }}
-                ></Player>
-                <span className="text-xs text-green-500 mt-[0.40rem] ml-2">High Safety and Hygiene</span>
+                  }}></Player>
+                <span className='text-xs text-green-500 mt-[0.40rem] ml-2'>
+                  High Safety and Hygiene
+                </span>
               </p>
-              <p className="text-sm text-zinc-400">
-                {values.BusType}
-              </p>
+              <p className='text-sm text-zinc-400'>{values.BusType}</p>
             </div>
-            <div className="flex">
-              <div className="w-1/2 h-[15.7rem] p-3">
+            <div className='flex'>
+              <div className='w-1/2 h-[15.7rem] p-3'>
                 <p>Seats Selected : {seatCounts[busId]}</p>
-                <p className="mt-5">Boarding Point Details :</p>
-                <p className="text-green-400">{values.BusFrom}</p>
-                <p className="border rounded bg-[#2B60DE]  text-center w-48 text-white">
+                <p className='mt-5'>Boarding Point Details :</p>
+                <p className='text-green-400'>{values.BusFrom}</p>
+                <p className='border rounded bg-[#2B60DE]  text-center w-48 text-white'>
                   {values.BusFtinme},19.10.2020
                 </p>
 
-                <p className="mt-5">Dropping Point Details :</p>
-                <p className="text-green-400">{values.BusTo}</p>
-                <p className="border rounded bg-[#2B60DE] text-center w-48 text-white">
+                <p className='mt-5'>Dropping Point Details :</p>
+                <p className='text-green-400'>{values.BusTo}</p>
+                <p className='border rounded bg-[#2B60DE] text-center w-48 text-white'>
                   {values.BusTtinme},19.10.2020
                 </p>
               </div>
-              <div className="w-1/2 p-4">
-                <p className="text-lg">PRICE</p>
-                <div className=" h-48">
-                  <ul className="flex p-2">
-                    <li className="ml-5">Total Basefare</li>
-                    <li className="ml-auto">{values.BusFee}</li>
+              <div className='w-1/2 p-4'>
+                <p className='text-lg'>PRICE</p>
+                <div className=' h-48'>
+                  <ul className='flex p-2'>
+                    <li className='ml-5'>Total Basefare</li>
+                    <li className='ml-auto'>{values.BusFee}</li>
                   </ul>
-                  <ul className="flex p-2">
-                    <li className="ml-5">Taxes & fees</li>
-                    <li className="ml-auto">{"32.25"}</li>
+                  <ul className='flex p-2'>
+                    <li className='ml-5'>Taxes & fees</li>
+                    <li className='ml-auto'>{"32.25"}</li>
                   </ul>
-                  <ul className="flex p-2 mt-6">
-                    <li className="ml-5">Final Price</li>
-                    <li className="ml-auto">{totalFee}</li>
+                  <ul className='flex p-2 mt-6'>
+                    <li className='ml-5'>Final Price</li>
+                    <li className='ml-auto'>{totalFee}</li>
                   </ul>
-                  <button className="bg-[#23cf95] w-24 h-8 rounded-xl p-1 text-white font-bold mt-5 ml-[9rem]">
+                  <button className='bg-[#23cf95] w-24 h-8 rounded-xl p-1 text-white font-bold mt-5 ml-[9rem]' onClick={handleSubmit}>
                     Continue
                   </button>
                 </div>
@@ -806,22 +664,26 @@ const Booking = () => {
     );
   });
 
+
   return (
-    <div className="container static rounded-xl p-10 overflow-y-auto max-h-[640px]">
-      <div className="container rounded-lg bg-slate-50 p-4 shadow-md absolute w-[72rem] -ml-5 -mt-12 hover:scale-105 duration-100">
-        <div className="flex">
-          <div className="text-green-600 w-1/3">
-            <span className="text-black">FROM : </span> {"Mumbai"}
+    
+  <section className=" bg-slate-200 rounded-2xl p-6 w-full h-[43rem]">  
+    <div className='container static rounded-xl p-10 overflow-y-auto max-h-[640px]'>
+      <div className='container rounded-lg bg-slate-50 p-4 shadow-md absolute w-[72rem] -ml-5 -mt-12 hover:scale-105 duration-100'>
+        <div className='flex'>
+          <div className='text-green-600 w-1/3'>
+            <span className='text-black'>FROM : </span> {Fromm}
           </div>
-          <div className="text-green-600 text-center w-1/3">
-            <span className="text-black">TO : </span> {"Chennai"}
+          <div className='text-green-600 text-center w-1/3'>
+            <span className='text-black'>TO : </span> {Too}
           </div>
-          <div className="text-end w-1/3">DEPARTURE DATE : {"19.10.2020"}</div>
+          <div className='text-end w-1/3 text-green-600'><span className='text-black'>DEPARTURE DATE : </span>{"19.10.2020"}</div>
         </div>
       </div>
 
       {values}
-    </div>
+      </div>
+    </section>
   );
 };
 

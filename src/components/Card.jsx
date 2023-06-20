@@ -32,6 +32,12 @@ class Card extends Component {
     this.setState({ TO: name });
   };
 
+  sendCopy = () => {
+    const { FROM, TO } = this.state;
+    this.props.copiedData({ FROM, TO });
+    this.setState(this.initialState);
+  };
+
   render() {
     return (
       <div className="container bg-blue-300  rounded-lg -mt-[80px]">
@@ -130,9 +136,10 @@ class Card extends Component {
 
             {<Date />}
 
-            <button className="mt-[1.4rem] ml-[8.5rem] w-36 bg-[#1ec273] h-10 rounded-2xl px-4 text-white font-bold">
+            <button className="mt-[1.4rem] ml-[8.5rem] w-36 bg-[#1ec273] h-10 rounded-2xl px-4 text-white font-bold" onClick={this.sendCopy}>
               Search Bus
             </button>
+            
           </div>
         </div>
       </div>
